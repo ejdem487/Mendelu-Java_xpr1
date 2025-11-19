@@ -26,9 +26,20 @@ public abstract class Automobil implements info, MotoroveVozidlo {
     }
 
     public static MotoroveVozidlo getVozidlo(){
-        MotoroveVozidlo mv = new SkodaOctavia(Palivo.NAFTA,TypMotoru.DVOUTAKT,5);
+       return new MotoroveVozidlo() {
 
-        return mv;
+            @Override
+            public Palivo naCoJezdim() {
+                return Palivo.NAFTA;
+            }
+
+            @Override
+            public TypMotoru mujMotor() {
+                return TypMotoru.DVOUTAKT;
+
+            }
+
+        };
     }
 
 }
