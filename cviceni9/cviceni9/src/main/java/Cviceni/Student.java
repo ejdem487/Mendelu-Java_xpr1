@@ -77,6 +77,35 @@ public class Student implements Comparable<Student>{
     }
 
     private static void readStudentCourser(File file, SortedMap<String, String> predmety, SortedMap<Integer, ArrayList<String>> studentiPredmety) {
+        try(BufferedReader br = new BufferedReader(new FileReader(file))){
+            Integer uid = Integer.parseInt(br.readLine());
+            String separator = br.readLine().trim();
+            String line, kodPredmetu, nazevPredmetu;
+            String[] strArray;
+            while ((line = br.readLine()) != null){
+                strArray = line.split(separator);
+                kodPredmetu = strArray[0].trim();
+                nazevPredmetu = strArray[1].trim();
+                PridejPredmet(predmety, kodPredmetu, nazevPredmetu);
+                pridejPredmetStudentovi(studentiPredmety, uid, kodPredmetu);
+            }
+        }
+        catch (IOException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void pridejPredmetStudentovi(SortedMap<Integer, ArrayList<String>> studentiPredmety, Integer uid, String kodPredmetu) {
+        if (!studentiPredmety.containsKey(uid)){
+            studentiPredmety.put(uid, new ArrayList<>());
+        }
+        studentiPredmety.get(uid).add(kodPredmetu);
+    }
+
+    private static void PridejPredmet(SortedMap<String, String> predmety, String kodPredmetu, String nazevPredmetu) {
+        if (!predmety.containsKey(kodPredmetu)){
+            predmety.put(kodPredmetu, nazevPredmetu);
+        }
     }
 
 }
